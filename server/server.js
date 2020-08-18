@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const apiRouter = require('./routers/api');
 
+require('dotenv').config();
+
 // BODY PARSERS & COOKIE PARSER
 app.use(express.json());
 app.use(express.urlencoded());
