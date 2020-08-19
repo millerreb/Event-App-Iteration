@@ -4,11 +4,14 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const apiRouter = require('./routers/api');
+const dotenv = require('dotenv').config();
+const cors = require('cors');
 
 // BODY PARSERS & COOKIE PARSER
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(cors());
 
 // SERVE UP STATIC FILES
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
@@ -31,6 +34,6 @@ app.use((err, req, res, next) => {
   res.status(401).send(err.message); // WHAT IS FRONT-END EXPECTING? JSON OR STRING?
 });
 
-//app.listen(3000); //listens on port 3000 -> http://localhost:3000/
+// app.listen(3000); //listens on port 3000 -> http://localhost:3000/
 app.listen(process.env.PORT || 3000);
 module.exports = app;
