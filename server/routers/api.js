@@ -61,10 +61,8 @@ router.use(
   '/logout', // SWITCH THIS TO POST REQUEST!!
   cookieController.removeCookie,
   (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.status(200).json('Successful logout.');
-  }
-);
+    return res.redirect('http://localhost:8080/');
+  });
 
 // CREATE A NEW EVENT
 
@@ -93,8 +91,7 @@ router.post(
   }
 );
 
-router.get(
-  '/events', // SWITCH THIS TO A GET REQUEST!!
+router.get('/events',
   eventController.allEvents,
   (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');

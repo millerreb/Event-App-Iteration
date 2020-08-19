@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 import MainContainer from "./components/MainContainer.jsx"
 
 export default function App() {

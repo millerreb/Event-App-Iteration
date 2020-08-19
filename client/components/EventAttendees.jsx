@@ -11,7 +11,7 @@ export default function EventAttendees({ attendees, userUpdate }) {
           <div className="circular"  >
             <img src={`${attendee.profilephoto}`} onClick={() => { userUpdate(attendee.username) }} />
           </div>
-          <p>{attendee.firstname} {attendee.lastname}</p>
+          <p className="boldName">{attendee.firstname} {attendee.lastname}</p>
         </div>
       )
     });
