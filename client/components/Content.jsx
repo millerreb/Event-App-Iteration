@@ -7,6 +7,23 @@ export default function Content({ content }) {
   const [comment, setComment] = useState('');
 
   let messages = [];
+  // if (!cont) {
+  //   commentStore.push(comment);
+  //   messages = commentStore.map((message, index) => {
+  //     return (
+  //       <div className="messageBox" key={`Content${index}`}>
+  //         <div className="userMessage">
+  //           <img src={message.profilephoto}></img>
+  //         </div>
+  //         <div className="message" key={`Content${index}`} >
+  //           <p className="messageName">{message.firstname} {message.lastname}</p>
+  //           <p className="messageText">{message.text}</p>
+  //           <p className="messageTime">{message.time}</p>
+  //         </div>
+  //       </div>
+  //     )
+  //   })
+  // }
   if (cont) {
     messages = cont.map((message, index) => {
       return (
@@ -25,6 +42,7 @@ export default function Content({ content }) {
       );
     });
   }
+
   //handles change to comment - updates the state
   const handleChange = (e) => {
     setComment(e.target.value);
@@ -33,10 +51,13 @@ export default function Content({ content }) {
   function handleCommentSubmit(e) {
     e.preventDefault();
     const date = new Date();
-    const newContent = cont.concat([
+    // const newContent = commentStore.concat([{ text: comment, time: date.toTimeString() }])
+    const newContent = cont.push([
       { text: comment, time: date.toTimeString() },
     ]);
+    console.log(newContent);
     setCont(newContent);
+
     //clear form data
     document.getElementsByName('comment-form')[0].reset();
   }

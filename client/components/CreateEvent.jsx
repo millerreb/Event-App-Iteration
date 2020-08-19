@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
-import { Modal, Button, Form, Card } from 'react-bootstrap';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 export default function CreateEvent({ addEvent }) {
-  /* Form data */
   const initialFormData = Object.freeze({
     eventtitle: '',
     eventlocation: '',
     eventdetails: '',
   });
 
-  const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData);
   const [rawStartTime, changeStart] = useState(new Date());
   const [rawEndTime, changeEnd] = useState(new Date());
   const [show, setShow] = useState(false);
-  //handles any change tot he form and updates the state
+  // handles any change tot he form and updates the state
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -26,7 +23,7 @@ export default function CreateEvent({ addEvent }) {
       [e.target.name]: e.target.value.trim(),
     });
   };
-  //handles submit event - create date and time and append to the event object
+  // handles submit event - create date and time and append to the event object
   const handleSubmit = (e) => {
     e.preventDefault();
     const eventstarttime = rawStartTime.toLocaleString('en-US', {

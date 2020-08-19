@@ -1,4 +1,8 @@
 const db = require('../models/models');
+
+// for Google Calendar API
+const fs = require('fs');
+const readline = require('readline');
 const { google } = require('googleapis');
 const calendar = google.calendar('v3');
 
@@ -306,5 +310,7 @@ eventController.filterForUser = (req, res, next) => {
   res.locals.allEventsInfo = filtered;
   return next();
 };
+
+eventController.addToCalendar = (req, res, next) => {};
 
 module.exports = eventController;

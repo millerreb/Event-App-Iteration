@@ -6,6 +6,7 @@ CREATE TABLE users
   "username" varchar NOT NULL CHECK ( username  <> ''),
   "firstname" varchar NOT NULL CHECK ( firstname  <> ''),
   "lastname" varchar NOT NULL CHECK ( lastname  <> ''),
+  "password" varchar NOT NULL CHECK ( password  <> ''),
   "profilephoto" varchar NOT NULL,
   UNIQUE ( username )
 );

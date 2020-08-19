@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import EventAttendees from './EventAttendees.jsx';
 import Content from './Content.jsx';
-import { ListGroup, Container, Row, Jumbotron, Button } from 'react-bootstrap';
+import { Container, Jumbotron, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
@@ -109,7 +109,7 @@ export default function Event(props) {
   };
 
   return (
-    <>
+    <div>
       <b className="hr anim"></b>
       <div className="event">
         <Container>
@@ -142,6 +142,6 @@ export default function Event(props) {
           <Content {...props} />
         </Container>
       </div>
-    </>
+    </div>
   );
 }
