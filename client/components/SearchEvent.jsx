@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearchPlus } from '@fortawesome/free-solid-svg-icons'
-import { Modal, Button, Form, Card } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearchPlus } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Form, } from 'react-bootstrap';
 import axios from 'axios';
 
 export default function SearchEvent({ searchEvent, events }) {
@@ -11,7 +11,7 @@ export default function SearchEvent({ searchEvent, events }) {
     description: '',
   });
 
-  const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData);
   const [results, updateResults] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -29,9 +29,9 @@ export default function SearchEvent({ searchEvent, events }) {
   });
   // filters list of events as the user types in
   const handleChange = (e) => {
-    const regex = new RegExp(e.target.value.trim(), "gi");
+    const regex = new RegExp(e.target.value.trim(), 'gi');
     const eventTitles = events.map(event => event.eventtitle);
-    updateResults(exampleEventData.filter((event) => event.eventtitle.match(regex) && !eventTitles.includes(event.eventtitle)))
+    updateResults(exampleEventData.filter((event) => event.eventtitle.match(regex) && !eventTitles.includes(event.eventtitle)));
   };
   // pass the added search event back to the main container
   const handleSubmit = (e, event) => {

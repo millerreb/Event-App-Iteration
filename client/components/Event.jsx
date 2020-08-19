@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 import EventAttendees from './EventAttendees.jsx';
 import Content from './Content.jsx';
-import { ListGroup, Container, Row, Jumbotron } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationArrow } from '@fortawesome/free-solid-svg-icons'
+import { Container, Jumbotron } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
 export default function Event(props) {
+  // fix for feed date display
+  let dateDisplay = new Date(props.eventdate).toDateString();
 
   return (
-    <>
+    <div>
       <b className="hr anim"></b>
       <div className="event">
         <Container>
           <Jumbotron fluid>
             <Container className='eventJumbotron'>
               <h1>{props.eventtitle}</h1>
-              <h4>{props.eventdate} - {props.starttime}</h4>
+              <h4>{dateDisplay}</h4>
               <h4>Location <FontAwesomeIcon icon={faLocationArrow} size="1x" /> : {props.eventlocation}</h4>
-              <p>{props.eventdetails}</p>
+              <p>Details: "{props.eventdetails}"</p>
             </Container>
           </Jumbotron>
 
@@ -30,6 +32,6 @@ export default function Event(props) {
           <Content {...props} />
         </Container>
       </div>
-    </>
+    </div>
   );
 }

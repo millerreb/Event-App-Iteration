@@ -13,6 +13,7 @@ export default function MainContainer() {
   const [user, setUser] = useState({});
   const [events, setEvents] = useState([]);
   //pull user data after OAuth login - all variables are named from SQL DB columns
+
   useEffect(() => {
     axios.get(`/api/info?userName=${userName}`)
       .then((res) => {
@@ -26,13 +27,13 @@ export default function MainContainer() {
         setUserName(res.data.users.username);
         setEvents(eventsInfo);
         setUser(userInfo);
-      })
+    })
   }, []);
-  //updates username when a different user is selected
+  // updates username when a different user is selected
   function handleUserPageChange(username) {
     setUserName(username);
   }
-  //handles the state change and posts to database on event creation
+  // handles the state change and posts to database on event creation
   function handleCreateEvent(event) {
     let { eventtitle, eventlocation, eventdate, eventstarttime, eventdetails } = event;
     axios.post(`/api/create?userName=${userName}`, { eventtitle, eventlocation, eventdate, eventstarttime, eventdetails })
@@ -44,7 +45,7 @@ export default function MainContainer() {
     const newEvents = [event].push(...events);
     setEvents(newEvents);
   }
-  //handles the state change and posts to database on search event add
+  // handles the state change and posts to database on search event add
   function handleSearchEvent(event) {
     // ADD
     console.log(event.eventtitle);

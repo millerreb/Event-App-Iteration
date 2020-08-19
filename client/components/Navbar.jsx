@@ -1,8 +1,8 @@
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Notnav({ userName }) {
   return (
@@ -16,5 +16,5 @@ export default function Notnav({ userName }) {
         </a>
     </Nav>
   </Navbar>
-  )
+  );
 }

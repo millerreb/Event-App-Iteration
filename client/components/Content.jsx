@@ -52,6 +52,7 @@ export default function Content({ content }) {
     const date = new Date();
     // const newContent = commentStore.concat([{ text: comment, time: date.toTimeString() }])
     const newContent = cont.push([{ text: comment, time: date.toTimeString() }])
+    console.log(newContent)
     setCont(newContent)
 
     //clear form data
