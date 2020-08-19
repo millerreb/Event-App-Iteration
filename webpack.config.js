@@ -6,7 +6,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
   mode: process.env.NODE_ENV,
@@ -41,16 +41,14 @@ module.exports = {
           },
         ],
       },
-    ]
+    ],
   },
   devServer: {
     port: 8080,
     contentBase: './client',
     compress: true,
     publicPath: '/dist/',
-    // port: 8080,
-    // contentBase: path.resolve(__dirname, '/dist'),
-    // publicPath: '/dist/',
+  
     proxy: {
       '/api/**': {
         target: 'http://localhost:3000',
@@ -67,10 +65,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
     }),
-    new MiniCssExtractPlugin() 
+    new MiniCssExtractPlugin(),
   ],
   node: {
     fs: 'empty',
-    http2: 'empty'
-  }
+    http2: 'empty',
+  },
 };
