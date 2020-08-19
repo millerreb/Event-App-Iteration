@@ -5,8 +5,8 @@ const loginController = {};
 loginController.oAuth = async (req, res, next) => {
 
     const oauth2Client = new google.auth.OAuth2(
-        '559739375459-cg35egmegke4g3b3cbi66ria81b66nro.apps.googleusercontent.com',
-        '35JN7BXlmbYPTurgXFGwQWSA',
+        process.env.Client_ID,
+        process.env.Client_Secret,
         'http://localhost:3000/api/login/google'
     );
 
@@ -30,21 +30,21 @@ loginController.oAuth = async (req, res, next) => {
 loginController.afterConsent = (req, res, next) => {
 
     const oauth2Client = new google.auth.OAuth2(
-        '559739375459-cg35egmegke4g3b3cbi66ria81b66nro.apps.googleusercontent.com',
-        '35JN7BXlmbYPTurgXFGwQWSA',
+        process.env.Client_ID,
+        process.env.Client_Secret,
         'http://localhost:3000/api/login/google'
     );
-    
+
     oauth2Client.getToken(req.query.code)
-    .then(data => {
-        const { tokens } = data;
-        oauth2Client.setCredentials(tokens);
-        res.locals.token = tokens.id_token;
-        return next();
-    })
-    .catch(err => {
-        if (err) console.log('afterConsent .catch block: ', err)
-    })
+        .then(data => {
+            const { tokens } = data;
+            oauth2Client.setCredentials(tokens);
+            res.locals.token = tokens.id_token;
+            return next();
+        })
+        .catch(err => {
+            if (err) console.log('afterConsent .catch block: ', err)
+        })
 };
 
 module.exports = loginController;

@@ -54,7 +54,7 @@ router.get('/info',
 router.use('/logout', // SWITCH THIS TO POST REQUEST!!
   cookieController.removeCookie,
   (req, res) => {
-    return res.status(200).json('Successful logout.');
+    return res.redirect('http://localhost:8080/');
   });
 
 // CREATE A NEW EVENT
@@ -78,7 +78,7 @@ router.post('/add',
     return res.status(200).json('User successfully added as attendee.');
   });
 
-router.get('/events', // SWITCH THIS TO A GET REQUEST!!
+router.get('/events',
   eventController.allEvents,
   (req, res) => {
     return res.status(200).json(res.locals.allEventsInfo);

@@ -1,44 +1,39 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faSearchPlus } from '@fortawesome/free-solid-svg-icons'
-import { Modal, Button, Form, Card } from 'react-bootstrap';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { Modal, Button, Form } from 'react-bootstrap';
 
 export default function CreateEvent({ addEvent }) {
-  /* Form data */
   const initialFormData = Object.freeze({
-    eventtitle: "",
-    eventlocation: "",
-    eventdetails: "",
+    eventtitle: '',
+    eventlocation: '',
+    eventdetails: '',
   });
 
-  const [formData, updateFormData] = React.useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData);
   const [dateTime, onChange] = useState(new Date());
   const [show, setShow] = useState(false);
-  //handles any change tot he form and updates the state
+  // handles any change tot he form and updates the state
   const handleChange = (e) => {
     updateFormData({
       ...formData,
       // Trimming any whitespace
-      [e.target.name]: e.target.value.trim()
+      [e.target.name]: e.target.value.trim(),
     });
   };
-  //handles submit event - create date and time and append to the event object
+  // handles submit event - create date and time and append to the event object
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const eventdate = dateTime.toDateString();
-    let time = dateTime.toTimeString();
-    let eventstarttime = time.split(" ")[0];
-    // ... submit to API or something
+    const time = dateTime.toTimeString();
+    const eventstarttime = time.split(' ')[0];
     addEvent({ ...formData, eventdate, eventstarttime });
     handleClose();
   };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   return (
     <div>

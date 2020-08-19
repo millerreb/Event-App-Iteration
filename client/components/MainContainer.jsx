@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import Profile from './Profile.jsx';
 import EventsFeed from './EventsFeed.jsx';
 import Notnav from './Navbar.jsx';
 import axios from 'axios';
-import { Card, Button, Col, Row, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import AddSearchEvent from './AddSearchEvent.jsx';
 
 // Implemented with hooks throughout
@@ -23,9 +23,9 @@ export default function MainContainer() {
           profilephoto: res.data.users.profilephoto,
         }
         let eventsInfo = res.data.events;
-        setUser(userInfo);
-        setEvents(eventsInfo);
         setUserName(res.data.users.username);
+        setEvents(eventsInfo);
+        setUser(userInfo);
       })
   }, []);
   //updates username when a different user is selected
@@ -36,18 +36,18 @@ export default function MainContainer() {
   function handleCreateEvent(event) {
     let { eventtitle, eventlocation, eventdate, eventstarttime, eventdetails } = event;
     axios.post(`/api/create?userName=${userName}`, { eventtitle, eventlocation, eventdate, eventstarttime, eventdetails })
-      .then((res) => {
-      })
+      .then((res) => {})
     event.attendees = [{
       username: user.username,
       profilephoto: user.profilephoto
     }];
-    const newEvents = [event].concat(events);
+    const newEvents = [event].push(...events);
     setEvents(newEvents);
   }
   //handles the state change and posts to database on search event add
   function handleSearchEvent(event) {
     // ADD
+    console.log(event.eventtitle);
     axios.post(`/api/add?eventtitle=${event.eventtitle}`)
       .then((res) => {
         event.attendees.push(
@@ -57,18 +57,18 @@ export default function MainContainer() {
             lastname: user.lastname,
             profilephoto: user.profilephoto
           });
-        const newEvents = [event].concat(events);
+        const newEvents = [event].push(...events);
         setEvents(newEvents);
       })
   }
 
   return (
     <div className="myContainer">
-      <Notnav />
+      <Notnav userName={userName} />
       <div className="container">
         <Container className="header">
           <Profile {...user} />
-          <AddSearchEvent addEvent={handleCreateEvent} searchEvent={handleSearchEvent} events={events} />
+          {userName && <AddSearchEvent addEvent={handleCreateEvent} searchEvent={handleSearchEvent} events={events} />}
         </Container>
         <EventsFeed
           events={events}

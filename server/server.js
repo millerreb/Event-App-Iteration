@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const apiRouter = require('./routers/api');
+const dotenv = require('dotenv').config();
 
 // BODY PARSERS & COOKIE PARSER
 app.use(express.json());
