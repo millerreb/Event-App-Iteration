@@ -3,7 +3,3 @@ dist
 package-lock.json
 node_modules
 .env
-<<<<<<< HEAD
-=======
-.DS_Store
->>>>>>> master

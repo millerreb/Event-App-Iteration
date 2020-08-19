@@ -48,7 +48,6 @@ module.exports = {
     contentBase: './client',
     compress: true,
     publicPath: '/dist/',
-  
     proxy: {
       '/api/**': {
         target: 'http://localhost:3000',

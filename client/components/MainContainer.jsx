@@ -59,16 +59,20 @@ export default function MainContainer() {
     let {
       eventtitle,
       eventlocation,
-      eventdate,
+      raweventstarttime,
+      raweventendtime,
       eventstarttime,
+      eventendtime,
       eventdetails,
     } = event;
     axios
       .post(`/api/create?userName=${userName}`, {
         eventtitle,
         eventlocation,
-        eventdate,
+        raweventstarttime,
+        raweventendtime,
         eventstarttime,
+        eventendtime,
         eventdetails,
       })
       .then((res) => {});

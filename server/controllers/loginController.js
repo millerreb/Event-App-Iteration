@@ -16,6 +16,7 @@ loginController.oAuth = async (req, res, next) => {
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/classroom.profile.photos',
     'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/calendar.events',
   ];
 
   const url = oauth2Client.generateAuthUrl({

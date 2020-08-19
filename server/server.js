@@ -7,6 +7,8 @@ const apiRouter = require('./routers/api');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
 
+require('dotenv').config();
+
 // BODY PARSERS & COOKIE PARSER
 app.use(express.json());
 app.use(express.urlencoded());

@@ -1,9 +1,12 @@
+DROP TABLE IF EXISTS users, events, usersandevents;
+
 CREATE TABLE users
 (
   "userid" serial PRIMARY KEY,
   "username" varchar NOT NULL CHECK ( username  <> ''),
   "firstname" varchar NOT NULL CHECK ( firstname  <> ''),
   "lastname" varchar NOT NULL CHECK ( lastname  <> ''),
+  "password" varchar NOT NULL CHECK ( password  <> ''),
   "profilephoto" varchar NOT NULL,
   UNIQUE ( username )
 );
@@ -14,9 +17,11 @@ CREATE TABLE events
 (
   "eventid" SERIAL PRIMARY KEY,
   "eventtitle" varchar NOT NULL CHECK ( eventtitle  <> ''),
-  "eventdate" date NOT NULL,
-  "eventstarttime" time NOT NULL,
-  "eventendtime" time NOT NULL,
+  -- "eventdate" date NOT NULL,
+  "raweventstarttime" timestamp NOT NULL,
+  "raweventendtime" timestamp NOT NULL,
+  "eventstarttime" varchar NOT NULL,
+  "eventendtime" varchar NOT NULL,
   "eventlocation" varchar NOT NULL CHECK ( eventlocation  <> ''),
   "eventdetails" varchar NOT NULL CHECK ( eventdetails  <> ''),
   "eventownerid" bigint NOT NULL,
@@ -41,7 +46,9 @@ CREATE TABLE usersandevents
     "username" varchar NOT NULL,
     "eventid" bigint NOT NULL,
     "eventtitle" varchar NOT NULL,
-    "eventdate" varchar NOT NULL,
+    -- "eventdate" varchar NOT NULL,
+      "raweventstarttime" timestamp NOT NULL,
+    "raweventendtime" timestamp NOT NULL,
     "eventstarttime" varchar NOT NULL,
     "eventendtime" varchar NOT NULL,
     "eventdetails" varchar NOT NULL,
