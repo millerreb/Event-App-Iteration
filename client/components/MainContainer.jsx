@@ -35,6 +35,8 @@ export default function MainContainer() {
     let {
       eventtitle,
       eventlocation,
+      raweventstarttime,
+      raweventendtime,
       eventstarttime,
       eventendtime,
       eventdetails,
@@ -43,6 +45,8 @@ export default function MainContainer() {
       .post(`/api/create?userName=${userName}`, {
         eventtitle,
         eventlocation,
+        raweventstarttime,
+        raweventendtime,
         eventstarttime,
         eventendtime,
         eventdetails,

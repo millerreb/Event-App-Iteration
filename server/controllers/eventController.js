@@ -71,12 +71,22 @@ eventController.createEvent = (req, res, next) => {
 
   const queryString = queries.createEvent;
 
-  let { eventtitle, eventlocation, eventstarttime, eventdetails } = req.body;
+  let {
+    eventtitle,
+    eventlocation,
+    raweventstarttime,
+    raweventendtime,
+    eventstarttime,
+    eventendtime,
+    eventdetails,
+  } = req.body;
   console.log('eventController.createEvent ', req.body);
   const queryValues = [
     eventtitle,
+    raweventstarttime,
+    raweventendtime,
     eventstarttime,
-    eventstarttime,
+    eventendtime,
     eventlocation,
     eventdetails,
     userid,

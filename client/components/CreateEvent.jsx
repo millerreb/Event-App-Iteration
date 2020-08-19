@@ -53,11 +53,12 @@ export default function CreateEvent({ addEvent }) {
     // let time = dateTime.toTimeString();
     // let eventstarttime = time.split(" ")[0];
     // ... submit to API or something
+    // addEvent function is in MainContainer.js line 34
     addEvent({
       ...formData,
-      rawStartTime,
+      raweventstarttime: rawStartTime,
+      raweventendtime: rawEndTime,
       eventstarttime,
-      rawEndTime,
       eventendtime,
     });
     handleClose();

@@ -35,7 +35,7 @@ RETURNING username
 queries.createEvent = `
 INSERT INTO events
   (eventtitle, raweventstarttime, raweventendtime, eventstarttime, eventendtime, eventlocation, eventdetails, eventownerid, eventownerusername, eventmessages)
-VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 RETURNING eventid
 ;
 `;
@@ -43,7 +43,7 @@ RETURNING eventid
 // ADDS ALL CURRENT EVENTS TO USERSANDEVENTS
 queries.addNewEventToJoinTable = `
 INSERT INTO usersandevents (userid, username, eventid, eventtitle,raweventstarttime, raweventendtime, eventstarttime, eventendtime, eventdetails, eventlocation)
-SELECT eventownerid, eventownerusername, eventid, eventtitle, raweventstarttime, raweventendtime,eventstarttime, eventendtime, eventdetails, eventlocation FROM events
+SELECT eventownerid, eventownerusername, eventid, eventtitle, raweventstarttime, raweventendtime, eventstarttime, eventendtime, eventdetails, eventlocation FROM events
 WHERE eventid=$1
 RETURNING usersandevents;
 `;
@@ -51,7 +51,7 @@ RETURNING usersandevents;
 // USERS ADDS THEMSELVES TO OTHER PEOPLE'S EVENTS
 queries.addUserToEvent = `INSERT INTO usersandevents
   (userid, username, eventid, eventtitle, raweventstarttime, raweventendtime ,eventstarttime, eventendtime, eventdetails, eventlocation)
-VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 RETURNING eventid
 ;
 `;
