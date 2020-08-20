@@ -2,6 +2,7 @@ const { google } = require('googleapis');
 const db = require('../models/models.js');
 const queries = require('../utils/queries');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const loginController = {};
 
@@ -30,7 +31,31 @@ loginController.oAuth = async (req, res, next) => {
   return next();
 };
 // creates Oauth token
+// loginController.afterConsent = (req, res, next) => {
+//   const oauth2Client = new google.auth.OAuth2(
+//     process.env.Client_ID,
+//     process.env.Client_Secret,
+//     'http://localhost:3000/api/login/google'
+//   );
+
+//   oauth2Client
+//     .getToken(req.query.code)
+//     .then((data) => {
+//       const { tokens } = data;
+//       oauth2Client.setCredentials(tokens);
+//       res.locals.token = tokens.id_token;
+//       return next();
+//     })
+//     .catch((err) => {
+//       if (err) console.log('afterConsent .catch block: ', err);
+//     });
+// };
+
+// creates Oauth token
 loginController.afterConsent = (req, res, next) => {
+  console.log('req.query in afterConsent', req.query);
+  const TOKEN_PATH = 'token.json';
+
   const oauth2Client = new google.auth.OAuth2(
     process.env.Client_ID,
     process.env.Client_Secret,
@@ -43,6 +68,12 @@ loginController.afterConsent = (req, res, next) => {
       const { tokens } = data;
       oauth2Client.setCredentials(tokens);
       res.locals.token = tokens.id_token;
+
+      fs.writeFile(TOKEN_PATH, JSON.stringify(tokens), (err) => {
+        if (err) return console.error(err);
+        console.log('Token stored to', TOKEN_PATH);
+      });
+
       return next();
     })
     .catch((err) => {

@@ -62,7 +62,8 @@ router.use(
   cookieController.removeCookie,
   (req, res) => {
     return res.redirect('http://localhost:8080/');
-  });
+  }
+);
 
 // CREATE A NEW EVENT
 
@@ -91,13 +92,10 @@ router.post(
   }
 );
 
-router.get('/events',
-  eventController.allEvents,
-  (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.status(200).json(res.locals.allEventsInfo);
-  }
-);
+router.get('/events', eventController.allEvents, (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.status(200).json(res.locals.allEventsInfo);
+});
 
 router.post(
   '/regularSignIn',
@@ -118,5 +116,10 @@ router.post(
     res.status(200).json({ cookie: res.locals.token });
   }
 );
+
+// Add event to Google Calendar
+router.post('/calendar', eventController.addToCalendar, (req, res) => {
+  res.status(200).json(res.locals.link);
+});
 
 module.exports = router;

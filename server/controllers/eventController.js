@@ -2,7 +2,6 @@ const db = require('../models/models');
 
 // for Google Calendar API
 const fs = require('fs');
-const readline = require('readline');
 const { google } = require('googleapis');
 const calendar = google.calendar('v3');
 
@@ -12,7 +11,7 @@ const eventController = {};
 
 eventController.getFullEvents = (req, res, next) => {
   const queryString = queries.userEvents;
-  const queryValues = [res.locals.allUserInfo.userid]; //user will have to be verified Jen / Minchan
+  const queryValues = [res.locals.allUserInfo.userid];
   db.query(queryString, queryValues)
     .then((data) => {
       if (!data.rows[0]) {
@@ -34,7 +33,7 @@ eventController.getFullEvents = (req, res, next) => {
 
 eventController.getAllAttendees = async (req, res, next) => {
   const allEvents = res.locals.allEventsInfo; // ALL EVENTS FOR THAT USER
-  const arrayOfEventTitles = []; // ['marc birthday', 'minchan birthday' ... ]
+  const arrayOfEventTitles = [];
   for (const event of allEvents) {
     arrayOfEventTitles.push(event.eventtitle);
   }
@@ -311,6 +310,72 @@ eventController.filterForUser = (req, res, next) => {
   return next();
 };
 
-eventController.addToCalendar = (req, res, next) => {};
+eventController.addToCalendar = (req, res, next) => {
+  const TOKEN_PATH = 'token.json';
+
+  const authorize = (credentials, callback) => {
+    const { client_secret, client_id, redirect_uris } = credentials.web;
+    const oAuth2Client = new google.auth.OAuth2(
+      client_id,
+      client_secret,
+      redirect_uris[0]
+    );
+
+    // Check if we have previously stored a token
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      callback(oAuth2Client);
+    });
+  };
+
+  const addEvent = (auth) => {
+    const calendar = google.calendar({ version: 'v3', auth });
+    const event = {
+      summary: req.body.eventtitle,
+      location: req.body.eventlocation,
+      description: req.body.eventdetails,
+      start: {
+        dateTime: req.body.raweventstarttime,
+        timeZone: 'America/Los_Angeles',
+      },
+      end: {
+        dateTime: req.body.raweventendtime,
+        timeZone: 'America/Los_Angeles',
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 24 * 60 },
+          { method: 'popup', minutes: 10 },
+        ],
+      },
+    };
+
+    calendar.events.insert(
+      {
+        auth: auth,
+        calendarId: 'primary',
+        resource: event,
+      },
+      function (err, event) {
+        if (err) {
+          console.log(
+            'There was an error contacting the Calendar service: ' + err
+          );
+        }
+        console.log('Event created: %s', event.data.htmlLink);
+        res.locals.link = event.data.htmlLink;
+        return next();
+      }
+    );
+  };
+
+  fs.readFile('credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize with credentials, then call the Google Calendar API
+    authorize(JSON.parse(content), addEvent);
+  });
+};
 
 module.exports = eventController;
