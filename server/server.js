@@ -13,7 +13,7 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
 
 // SERVE UP STATIC FILES
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
